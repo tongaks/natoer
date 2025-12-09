@@ -14,10 +14,14 @@ const int windowX = 500;
 const int windowY = 600;
 
 class Window : public wxFrame {
+	const int ID_HIDE = 128;
+	bool isHidden = false;
 
 	// menu bar
 	wxMenuBar* menuBar;
 	wxMenu* menuItemFile;
+	wxMenu* menuItemEdit;
+	wxMenu* menuItemSettings;
 
 	// panels
 	wxPanel* pnlMain;
@@ -43,6 +47,10 @@ class Window : public wxFrame {
 
 public:
 	Window(const wxString &title, wxPoint wPoint, wxSize wSize);
+
+	void Minimize(wxCommandEvent &ev);
+	void UnMinimize(wxCommandEvent &ev);
+
 	bool isMinimized = false;
 
 

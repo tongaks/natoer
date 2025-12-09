@@ -1,7 +1,8 @@
-#include "../headers/window.h"
+#include "setup_controls.cpp"
 
 Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
-: wxFrame(NULL, wxID_ANY, title, wPoint, wSize, wxCAPTION | wxCLOSE_BOX) {
+: wxFrame(NULL, wxID_ANY, title, wPoint, wSize, wxBORDER_NONE) {
+// : wxFrame(NULL, wxID_ANY, title, wPoint, wSize, wxCAPTION | wxCLOSE_BOX) {
 	// Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
 
 	// panels
@@ -14,12 +15,20 @@ Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
 	// menu bar
 	menuBar = new wxMenuBar;
 	menuItemFile = new wxMenu;
+	menuItemFile->Append(ID_HIDE, wxT("Hide"));
+	Bind(wxEVT_MENU, &Window::Minimize, this, ID_HIDE);
+
 	menuItemFile->Append(wxID_ANY, wxT("New"));
 	menuItemFile->Append(wxID_ANY, wxT("Open"));
 	menuItemFile->Append(wxID_ANY, wxT("Save"));
 	menuItemFile->Append(wxID_EXIT, wxT("&Quit"));
 
+	menuItemSettings = new wxMenu;
+	menuItemSettings->Append(wxID_ANY, wxT("Themes"));
+	menuItemSettings->Append(wxID_ANY, wxT("Preferences"));
+
 	menuBar->Append(menuItemFile, wxT("&File"));
+	menuBar->Append(menuItemSettings, wxT("Settings"));
 	SetMenuBar(menuBar);
 
 	
@@ -28,7 +37,10 @@ Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
 
 
 	// buttons
-	btnHide = new wxButton(pnlNavbar, wxID_ANY, "Hide");
+	btnHide =  new wxButton(this, wxID_ANY, "View");
+	btnHide->Bind(wxEVT_BUTTON, &Window::UnMinimize, this);
+	btnHide->Hide();
+	
 	btnAddTask = new wxButton(pnlNavbar, wxID_ANY, "New");
 
 
@@ -37,7 +49,7 @@ Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
 	szrNavbar = new wxBoxSizer(wxHORIZONTAL);
 	szrNavbar->Add(txtbxSearch, 1, wxEXPAND | wxLEFT | wxRIGHT, 10);
 	szrNavbar->Add(btnAddTask, 0, wxLEFT, 10);
-	szrNavbar->Add(btnHide, 0, wxLEFT | wxRIGHT, 10);
+	// szrNavbar->Add(btnHide, 0, wxLEFT | wxRIGHT, 10);
 	pnlNavbar->SetSizer(szrNavbar);
 
 	szrMainH = new wxBoxSizer(wxHORIZONTAL);

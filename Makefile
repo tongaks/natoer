@@ -4,7 +4,7 @@ test: build/app.o build/window.o
 build/app.o: headers/app.h src/app.cpp
 	g++ -c src/app.cpp -o build/app.o `wx-config --cxxflags --libs`
 
-build/window.o: headers/window.h
+build/window.o: headers/window.h src/window.cpp src/setup_controls.cpp
 	g++ -c src/window.cpp -o build/window.o `wx-config --cxxflags --libs`
 
 clean:
