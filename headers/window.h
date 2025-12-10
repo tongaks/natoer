@@ -25,7 +25,6 @@ class Window : public wxFrame {
 
 	// panels
 	wxPanel* pnlMain;
-	wxPanel* pnlTasks;
 	wxPanel* pnlNavbar;
 
 
@@ -48,10 +47,25 @@ class Window : public wxFrame {
 public:
 	Window(const wxString &title, wxPoint wPoint, wxSize wSize);
 
+	wxPanel* pnlTasks;
+	bool isMinimized = false;
+
+
+	// event handlers
 	void Minimize(wxCommandEvent &ev);
 	void UnMinimize(wxCommandEvent &ev);
+	void AddNewTask(wxCommandEvent &ev);
 
-	bool isMinimized = false;
+
+
+	// setup
+	void SetupMenuBar();
+
+
+
+
+
+
 
 
 	// void Minimize(wxCommandEvent &ev) {

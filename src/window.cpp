@@ -13,23 +13,7 @@ Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
 
 
 	// menu bar
-	menuBar = new wxMenuBar;
-	menuItemFile = new wxMenu;
-	menuItemFile->Append(ID_HIDE, wxT("Hide"));
-	Bind(wxEVT_MENU, &Window::Minimize, this, ID_HIDE);
-
-	menuItemFile->Append(wxID_ANY, wxT("New"));
-	menuItemFile->Append(wxID_ANY, wxT("Open"));
-	menuItemFile->Append(wxID_ANY, wxT("Save"));
-	menuItemFile->Append(wxID_EXIT, wxT("&Quit"));
-
-	menuItemSettings = new wxMenu;
-	menuItemSettings->Append(wxID_ANY, wxT("Themes"));
-	menuItemSettings->Append(wxID_ANY, wxT("Preferences"));
-
-	menuBar->Append(menuItemFile, wxT("&File"));
-	menuBar->Append(menuItemSettings, wxT("Settings"));
-	SetMenuBar(menuBar);
+	SetupMenuBar();
 
 	
 	// textboxs
@@ -42,6 +26,7 @@ Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
 	btnHide->Hide();
 	
 	btnAddTask = new wxButton(pnlNavbar, wxID_ANY, "New");
+	btnAddTask->Bind(wxEVT_BUTTON, &Window::AddNewTask, this);
 
 
 
@@ -49,9 +34,15 @@ Window::Window(const wxString &title, wxPoint wPoint, wxSize wSize)
 	szrNavbar = new wxBoxSizer(wxHORIZONTAL);
 	szrNavbar->Add(txtbxSearch, 1, wxEXPAND | wxLEFT | wxRIGHT, 10);
 	szrNavbar->Add(btnAddTask, 0, wxLEFT, 10);
-	// szrNavbar->Add(btnHide, 0, wxLEFT | wxRIGHT, 10);
 	pnlNavbar->SetSizer(szrNavbar);
 
+
+	szrTasks = new wxBoxSizer(wxVERTICAL);
+	// szrTasks->Add(pnlTask, 0, wxEXPAND);
+	pnlTasks->SetSizer(szrTasks);
+
+
+	// main sizers
 	szrMainH = new wxBoxSizer(wxHORIZONTAL);
 	szrMainH->Add(pnlNavbar, 1, wxEXPAND);
 
